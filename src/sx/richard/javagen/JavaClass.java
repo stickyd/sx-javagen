@@ -10,6 +10,16 @@ import sx.richard.javagen.Element.ClassModifier;
 
 public class JavaClass extends Element<ClassModifier> {
 
+	public static final JavaClass INT = new JavaClass("int");
+	public static final JavaClass STRING = new JavaClass("String");
+	public static final JavaClass OBJECT = new JavaClass("Object");
+	public static final JavaClass FLOAT = new JavaClass("float");
+	public static final JavaClass CHAR = new JavaClass("char");
+	public static final JavaClass BYTE = new JavaClass("byte");
+	public static final JavaClass SHORT = new JavaClass("short");
+	public static final JavaClass DOUBLE = new JavaClass("double");
+	public static final JavaClass LONG = new JavaClass("long");
+
 	public final JavaPackage pkg;
 
 	private final Set<Method> methods;
@@ -21,19 +31,19 @@ public class JavaClass extends Element<ClassModifier> {
 		classes = new HashSet<JavaClass>();
 		fields = new HashSet<Field>();
 	}
-	
+
 	public List<Method> getMethods() {
 		List<Method> list = new ArrayList<Method>(methods);
 		Collections.sort(list);
 		return list;
 	}
-	
+
 	public List<Field> getFields() {
 		List<Field> list = new ArrayList<Field>(fields);
 		Collections.sort(list);
 		return list;
 	}
-	
+
 	public List<JavaClass> getClasses() {
 		List<JavaClass> list = new ArrayList<JavaClass>(classes);
 		Collections.sort(list);

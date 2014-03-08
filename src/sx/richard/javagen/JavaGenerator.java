@@ -61,7 +61,7 @@ public class JavaGenerator {
 
 	private <T> JavaGenerator list(List<T> modifiers) {
 		for (int i = 0, n = modifiers.size(); i < n; i++) {
-			append(modifiers.get(i).toString()).space();
+			append(modifiers.get(i).toString());
 		}
 		return this;
 	}
@@ -78,6 +78,15 @@ public class JavaGenerator {
 	private JavaGenerator clss(JavaClass clss) {
 		return append(new JavaGenerator(clss).toString());
 	}
+	
+	private JavaGenerator field(Field field) {
+		append(field.getScope()).list(field.getModifiers()).append(field.type.name).space().append(field.name);
+		String value = field.getValue();
+		if(value != null) {
+			append(" = " + value);
+		}
+		return semiColon();
+	}
 
 	public String toString() {
 		builder.setLength(0);
@@ -90,10 +99,21 @@ public class JavaGenerator {
 				.append("class ").append(clss.name).append(" {");
 		tabInc();
 		
-		 boolean empty = true;
+		boolean empty = true;
 		
 		for(JavaClass innerClass : clss.getClasses()) {
 			line().line().clss(innerClass);
+			empty = false;
+		}
+		if(clss.getClasses().size() > 0) {
+			line();
+		}
+		
+		if(clss.getFields().size() > 0) {
+			line();
+		}
+		for(Field field : clss.getFields()) {
+			field(field).line();
 			empty = false;
 		}
 
